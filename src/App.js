@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './Components/Layouts/Navbar';
+import User from './Components/User/User';
+import Alert from './Components/Layouts/Alert';
+import About from './Components/Pages/About';
+import Home from './Components/Pages/Home';
+import Notfound from './Components/Pages/Notfound';
+
+import GithubState from './Context/github/GithubState';
+import AlertState from './Context/alert/AlertState';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    return (
+      <GithubState>
+        <AlertState>
+      <Router>
+      <div className="App">
+        <Navbar />
+        <div className="container">
+        <Alert />
+        <Switch>
+          <Route 
+          exact path='/'
+          component = {Home} />
+          <Route 
+          exact path='/about' 
+          component = {About} />
+          <Route 
+          exact path ='/user/:login' 
+          component = {User} 
+          />
+          <Route 
+          component={Notfound} />
+        </Switch>
+        
+        </div>
+      </div>
+      </Router>
+      </AlertState>
+      </GithubState>
+    );
+  } 
 
 export default App;
